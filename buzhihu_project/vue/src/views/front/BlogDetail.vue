@@ -6,7 +6,7 @@
         <div class="card" style="padding: 30px; margin-bottom: 10px">
           <div style="font-weight: bold; font-size: 24px; margin-bottom: 20px">{{ blog.title }}</div>
           <div style="color: #666; margin-bottom: 20px">
-            <span style="margin-right: 20px"><i class="el-icon-user"></i> {{ blog.userName }}</span>
+            <span style="margin-right: 20px"><i class="el-icon-user"></i> <a :href="'/front/user?userId=' + blog.userId" style="color: #333">{{ blog.userName }}</a></span>
             <span style="margin-right: 20px"><i class="el-icon-date"></i> {{ blog.date }}</span>
             <span style="margin-right: 20px"><i class="el-icon-eye"></i> {{ blog.readCount }}</span>
             <span>
@@ -35,9 +35,13 @@
       <div style="width: 260px">
         <div class="card" style="margin-bottom: 10px">
           <div style="display: flex; align-items: center; grid-gap: 10px; margin-bottom: 10px">
-            <img :src="blog.user?.avatar" alt="" style="width: 50px; height: 50px; border-radius: 50%">
+            <a :href="'/front/user?userId=' + blog.userId" style="display:block; border-radius: 50%">
+              <img :src="blog.user?.avatar" alt="" style="width: 50px; height: 50px; border-radius: 50%">
+            </a>
             <div style="flex: 1;">
-              <div style="font-weight: bold; margin-bottom: 5px">{{ blog.user?.name }}</div>
+              <a :href="'/front/user?userId=' + blog.userId" style="color: #333">
+                <div style="font-weight: bold; margin-bottom: 5px">{{ blog.user?.name }}</div>
+              </a>
               <div style="color: #666; font-size: 13px" class="line2">{{ blog.user?.info }}</div>
             </div>
           </div>

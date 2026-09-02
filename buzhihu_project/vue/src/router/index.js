@@ -94,6 +94,12 @@ const routes = [
                 component: () => import('../views/front/Follow')
             },
             {
+                path: 'user',
+                name: 'User',
+                meta: {name: '个人主页'},
+                component: () => import('../views/front/User')
+            },
+            {
                 path: 'person',
                 name: 'Person',
                 meta: {name: '个人信息'},

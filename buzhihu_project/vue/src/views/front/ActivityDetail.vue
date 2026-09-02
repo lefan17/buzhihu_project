@@ -17,12 +17,18 @@
             <span style="margin-left: 5px" v-else>{{ activity.address }}</span>
             <el-tag style="margin-left: 5px" type="primary" size="mini">{{ activity.form }}</el-tag>
           </div>
+          <div style="display: flex; align-items: center; margin-bottom: 10px">
+            <div style="flex: 1">
+              <el-tag type="info" size="mini">已报名 {{ activity.signCount || 0 }}{{ activity.maxCount ? ' / ' + activity.maxCount : '' }}</el-tag>
+            </div>
+          </div>
           <div style="display: flex; align-items: center">
             <div style="flex: 1">
               <el-button type="primary" disabled v-if="activity.isEnd" key="已结束">已结束</el-button>
               <el-button type="success" v-else-if="activity.isSign" key="signText" @click="cancel"
                          @mouseenter.native="signText='取消报名'" @mouseleave="signText='已报名'">{{ signText }}
               </el-button>
+              <el-button type="primary" disabled v-else-if="activityFull" key="已满员">已满员</el-button>
               <el-button type="primary" v-else @click="sign">报 名</el-button>
             </div>
 
@@ -92,6 +98,11 @@ export default {
       reportVisible: false,
       reportReason: '',
       reportDetail: ''
+    }
+  },
+  computed: {
+    activityFull() {
+      return this.activity.maxCount > 0 && this.activity.signCount >= this.activity.maxCount
     }
   },
   created() {

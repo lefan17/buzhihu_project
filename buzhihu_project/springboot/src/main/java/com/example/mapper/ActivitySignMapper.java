@@ -16,6 +16,9 @@ public interface ActivitySignMapper {
     @Select("select * from activity_sign where activity_id = #{activityId} and user_id = #{userId}")
     ActivitySign selectByActivityIdAndUserId(@Param("activityId") Integer actId, @Param("userId") Integer userId);
 
+    @Select("select count(*) from activity_sign where activity_id = #{activityId}")
+    int countByActivityId(@Param("activityId") Integer activityId);
+
     @Select("select activity_sign.*, activity.name as activityName, user.name as userName from activity_sign " +
             "left join activity on activity_sign.activity_id = activity.id " +
             "left join user on activity_sign.user_id = user.id " +

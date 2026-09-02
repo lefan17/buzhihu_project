@@ -41,6 +41,10 @@ public class DashboardService {
 
         // 分类文章数分布
         data.put("categoryBlogCount", dashboardMapper.categoryBlogCount());
+
+        // 互动转化榜单：报名最多的活动 / 点赞最多的文章
+        data.put("topActivitySigns", dashboardMapper.topActivitySign());
+        data.put("topBlogLikes", dashboardMapper.topBlogLikes());
         return data;
     }
 }

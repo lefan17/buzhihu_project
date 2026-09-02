@@ -11,6 +11,7 @@ import com.example.entity.*;
 import com.example.exception.CustomException;
 import com.example.mapper.ActivityMapper;
 import com.example.mapper.BlogMapper;
+import com.example.utils.HtmlUtils;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -48,6 +49,7 @@ public class BlogService {
      */
     public void add(Blog blog) {
         blog.setDate(DateUtil.today());
+        blog.setContent(HtmlUtils.sanitize(blog.getContent()));  // 富文本消毒，防 XSS
         Account currentUser = TokenUtils.getCurrentUser();
         if (RoleEnum.USER.name().equals(currentUser.getRole())) {
             blog.setUserId(currentUser.getId());
@@ -92,6 +94,7 @@ public class BlogService {
                 throw new CustomException(ResultCodeEnum.NO_AUTH);
             }
         }
+        blog.setContent(HtmlUtils.sanitize(blog.getContent()));  // 富文本消毒，防 XSS
         blogMapper.updateById(blog);
     }
 

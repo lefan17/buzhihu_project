@@ -7,7 +7,7 @@
           <div class="line1" style="color: #666; margin-bottom: 10px; font-size: 13px">{{ item.descr }}</div>
           <div style="display: flex; align-items: center">
             <div style="flex: 1; font-size: 13px">
-              <span style="color: #666; margin-right: 20px"><i class="el-icon-user"></i> {{ item.userName }}</span>
+              <span style="color: #666; margin-right: 20px"><i class="el-icon-user"></i> <a :href="'/front/user?userId=' + item.userId" style="color: #2a60c9">{{ item.userName }}</a></span>
               <span style="color: #666; margin-right: 20px"><i class="el-icon-eye"></i> {{ item.readCount }}</span>
               <span style="color: #666"><i class="el-icon-like"></i> {{ item.likesCount }}</span>
 
@@ -45,7 +45,8 @@ export default {
   props: {
     categoryName: null,
     type: null,
-    showOpt: false
+    showOpt: false,
+    userId: null
   },
   data() {
     return {
@@ -91,14 +92,17 @@ export default {
         case 'comment': url = '/blog/selectComment'; break;
         default: url = '/blog/selectPage'
       }
-      this.$request.get(url, {
-        params: {
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
-          categoryName: this.categoryName === '全部博客' ? null : this.categoryName,
-          title: this.$route.query.title
-        }
-      }).then(res => {
+      const params = {
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+        categoryName: this.categoryName === '全部博客' ? null : this.categoryName,
+        title: this.$route.query.title
+      }
+      // 指定查看某个作者的博客
+      if (this.userId && this.type !== 'user') {
+        params.userId = this.userId
+      }
+      this.$request.get(url, {params: params}).then(res => {
         this.tableData = res.data?.list
         this.total = res.data?.total
       })

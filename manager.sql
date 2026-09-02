@@ -98,12 +98,13 @@ CREATE TABLE `activity`  (
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '活动详情',
   `cover` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '封面',
   `user_id` int(10) NULL DEFAULT NULL COMMENT '创建人ID',
+  `max_count` int(10) NULL DEFAULT 0 COMMENT '报名人数上限(0=不限)',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '活动' ROW_FORMAT = DYNAMIC;
 
 INSERT INTO `activity` VALUES
-(1, '校园摄影大赛', '分享你眼中的校园，赢取精美奖品', '2025-04-01', '2025-04-30', '线上', 'https://example.com/photo', '校团委', 20, '<p>欢迎大家踊跃投稿！</p>', 'http://localhost:9091/files/1744708788527-bingyin.jpg', 1),
-(2, '春日踏青活动', '一起去郊外踏青，感受春天的气息', '2025-03-20', '2025-03-22', '线下', '市郊森林公园', '校学生会', 15, '<p>请自带干粮和水。</p>', 'http://localhost:9091/files/1697438073596-avatar.png', 1);
+(1, '校园摄影大赛', '分享你眼中的校园，赢取精美奖品', '2025-04-01', '2025-04-30', '线上', 'https://example.com/photo', '校团委', 20, '<p>欢迎大家踊跃投稿！</p>', 'http://localhost:9091/files/1744708788527-bingyin.jpg', 1, 100),
+(2, '春日踏青活动', '一起去郊外踏青，感受春天的气息', '2025-03-20', '2025-03-22', '线下', '市郊森林公园', '校学生会', 15, '<p>请自带干粮和水。</p>', 'http://localhost:9091/files/1697438073596-avatar.png', 1, 50);
 
 -- ----------------------------
 -- Table structure for activity_sign

@@ -31,6 +31,10 @@ public class Activity {
     private Integer likesCount;
     private Integer collectCount;
 
+    /** 报名人数上限(0=不限) */
+    private Integer maxCount;
+    /** 已报名人数 */
+    private Integer signCount;
 
     private Integer userId;
 
@@ -77,6 +81,22 @@ public class Activity {
 
     public void setCollectCount(Integer collectCount) {
         this.collectCount = collectCount;
+    }
+
+    public Integer getMaxCount() {
+        return maxCount;
+    }
+
+    public void setMaxCount(Integer maxCount) {
+        this.maxCount = maxCount;
+    }
+
+    public Integer getSignCount() {
+        return signCount;
+    }
+
+    public void setSignCount(Integer signCount) {
+        this.signCount = signCount;
     }
 
     public Integer getUserId() {

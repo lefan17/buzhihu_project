@@ -10,6 +10,8 @@ import com.example.entity.Account;
 import com.example.entity.Admin;
 import com.example.entity.User;
 import com.example.exception.CustomException;
+import com.example.mapper.BlogMapper;
+import com.example.mapper.FollowMapper;
 import com.example.mapper.UserMapper;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
@@ -18,13 +20,21 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private BlogMapper blogMapper;
+
+    @Resource
+    private FollowMapper followMapper;
 
     public void add(User user) {
         //判断用户账号是否为空
@@ -77,6 +87,26 @@ public class UserService {
 
     public User selectById(Integer id) {
         return userMapper.selectById(id);
+    }
+
+    /**
+     * 公开个人主页信息（博客数/粉丝数/关注数/是否已关注）
+     */
+    public Map<String, Object> publicInfo(Integer id) {
+        User user = selectById(id);
+        if (ObjectUtil.isNull(user)) {
+            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", user);
+        map.put("blogCount", blogMapper.selectUserBlog(id).size());
+        map.put("followers", followMapper.countFollowers(id));
+        map.put("following", followMapper.countFollowing(id));
+        Account currentUser = TokenUtils.getCurrentUser();
+        boolean isFollowing = currentUser.getId() != null
+                && followMapper.selectByUserAndFollow(currentUser.getId(), id) != null;
+        map.put("isFollowing", isFollowing);
+        return map;
     }
 
     public List<User> selectAll(User user) {

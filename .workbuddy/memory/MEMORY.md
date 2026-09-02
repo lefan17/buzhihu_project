@@ -3,7 +3,8 @@
 ## 仓库与版本控制现状（2026-09-02 核实）
 
 - **远端**：`lefan17/buzhihu_project`（阿帆自己的仓库，非 fork）。2025-02-20 创建，`pushed_at` 停在创建当天，`size=0`，GitHub API 返回 **"Git Repository is empty"** —— 完全空仓库，无 README、无 description、无 topics、无 license。
-- **本地（2026-09-02 已解决）**：已 `git init -b main`，分支 main，完成首次提交 `c521622`（161 个文件），远端 origin 已指向 `https://github.com/lefan17/buzhihu_project.git`。**尚未 push**，等阿帆授权。
+- **已上线（2026-09-02 16:32 完成）**：`git init -b main`，两次提交（`c521622` 首次入库 161 文件 / `cf38d1a` 项目笔记），已 push 到 `https://github.com/lefan17/buzhihu_project.git`。GitHub 识别主语言为 Vue。**代码首次有了备份**，资产风险解除。
+- **推送踩坑**：我的沙箱环境无法推送（`APPDATA` 为空，读不到 Windows 凭据管理器；且 HTTPS 走 schannel 会被掐断报 `server closed abruptly`）。**推送必须由阿帆在他自己的 CMD 里完成**，我只能做到 commit 为止。另需 `git config --global credential.helper manager`（等价于在 GCM 弹窗选 manager 并勾"始终使用"）。
 - **git 身份**：用**项目级**配置（`git config` 不带 `--global`），name=`lefan17`，email=`128964809+lefan17@users.noreply.github.com`（GitHub 隐私邮箱，能关联账号且不暴露真邮箱）。**刻意不动全局配置**，因为阿帆另有 agent-test-hub、software-testing-practice 两个仓库，明确要求不要波及。
 - **git 环境**：git 2.55.0；全局 `user.name`/`user.email` 仍未设置（保持原样）；`credential.helper` 未设置，push 时需 GCM 弹窗授权一次。
 - **仓库体积**：清理后 `.git` 为 8.0MB（161 文件）。首次 add 时误纳了整个 70MB `files/`，`git reset` 后对象仍悬空占 39MB，需 `git gc --prune=now` 才真正释放。

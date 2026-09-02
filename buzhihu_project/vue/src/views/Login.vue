@@ -99,6 +99,12 @@ export default {
               localStorage.setItem("xm-user", JSON.stringify(res.data))  // 存储用户数据
               this.$message.success("登陆成功")
               setTimeout(() => {
+                // 优先回到来源页
+                const redirect = this.$route.query.redirect
+                if (redirect) {
+                  location.href = redirect
+                  return
+                }
                 if (res.data.role === 'ADMIN') {
                   location.href = '/home'
                 } else {

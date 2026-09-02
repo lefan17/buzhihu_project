@@ -9,6 +9,7 @@
             <div style="flex: 1; color: #666"><i class="el-icon-date"></i> {{ item.start }}</div>
             <el-button type="primary" disabled v-if="item.isEnd" key="已结束">已结束</el-button>
             <el-button type="primary" disabled v-else-if="item.isSign" key="已报名">已报名</el-button>
+            <el-button type="primary" disabled v-else-if="item.maxCount > 0 && item.signCount >= item.maxCount" key="已满员">已满员</el-button>
             <el-button type="primary" v-else>报 名</el-button>
           </div>
         </div>

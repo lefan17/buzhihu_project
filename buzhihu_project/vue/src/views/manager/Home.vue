@@ -41,6 +41,25 @@
       </div>
     </div>
 
+    <div style="display: flex; grid-gap: 10px; margin: 10px 0">
+      <div style="flex: 1" class="card">
+        <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px">报名最多的活动</div>
+        <div v-for="(a, i) in topActivitySigns" :key="i" style="display: flex; padding: 8px 0; border-bottom: 1px solid #f5f5f5">
+          <span style="width: 60px; color: #666">{{ a.name }}</span>
+          <span style="flex: 1; color: #333" class="line1">{{ a.cnt }} 人报名</span>
+        </div>
+        <div v-if="!topActivitySigns.length" style="color: #999; padding: 10px">暂无数据</div>
+      </div>
+      <div style="flex: 1" class="card">
+        <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px">点赞最多的文章</div>
+        <div v-for="(b, i) in topBlogLikes" :key="i" style="padding: 8px 0; border-bottom: 1px solid #f5f5f5">
+          <div class="line1" style="color: #333">{{ b.title }}</div>
+          <div style="color: #999; font-size: 12px">{{ b.cnt }} 个赞</div>
+        </div>
+        <div v-if="!topBlogLikes.length" style="color: #999; padding: 10px">暂无数据</div>
+      </div>
+    </div>
+
     <div style="display: flex; margin: 10px 0">
       <div style="width: 50%;" class="card">
         <div style="margin-bottom: 15px; font-size: 20px; font-weight: bold">公告列表</div>
@@ -71,7 +90,9 @@ export default {
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       notices: [],
       statData: {},
-      trend: []
+      trend: [],
+      topActivitySigns: [],
+      topBlogLikes: []
     }
   },
   computed: {
@@ -123,6 +144,8 @@ export default {
       this.$request.get('/dashboard/statistics').then(res => {
         this.statData = res.data || {}
         this.trend = res.data?.trend || []
+        this.topActivitySigns = res.data?.topActivitySigns || []
+        this.topBlogLikes = res.data?.topBlogLikes || []
       })
     },
     x(i) {

@@ -16,7 +16,8 @@ public enum ResultCodeEnum {
     USER_NOT_EXIST_ERROR("5004", "用户不存在"),
     PARAM_PASSWORD_ERROR("5005", "原密码输入错误"),
     ACTIVITY_SIGN_ERROR("5006", "活动已报名"),
-    USER_BANNED("5007", "账号已被封禁，请联系管理员");
+    USER_BANNED("5007", "账号已被封禁，请联系管理员"),
+    ACTIVITY_FULL("5008", "活动报名人数已满");
 
     public String code;
     public String msg;

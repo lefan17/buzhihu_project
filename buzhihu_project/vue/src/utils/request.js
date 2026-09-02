@@ -32,7 +32,12 @@ request.interceptors.response.use(
             res = res ? JSON.parse(res) : res
         }
         if (res.code === '401') {
-            router.push('/login')
+            // 记录来源页面，登录后回跳
+            const current = router.currentRoute
+            if (current.path !== '/login') {
+                const redirect = current.fullPath
+                router.push({path: '/login', query: {redirect: redirect}})
+            }
         }
         return res;
     },

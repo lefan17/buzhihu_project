@@ -5,7 +5,7 @@
 <mapper namespace="com.example.mapper.ActivityMapper">
 
     <sql id="Base_Column_List">
-        id,name,descr,start,end,form,address,host,read_count,content,cover
+        id,name,descr,start,end,form,address,host,read_count,content,cover,max_count
     </sql>
 
     <select id="selectLike" resultType="com.example.entity.Activity">
@@ -108,6 +108,7 @@
             <if test="readCount != null">read_count,</if>
             <if test="content != null">content,</if>
             <if test="cover != null">cover,</if>
+            <if test="maxCount != null">max_count,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -121,6 +122,7 @@
             <if test="readCount != null">#{readCount},</if>
             <if test="content != null">#{content},</if>
             <if test="cover != null">#{cover},</if>
+            <if test="maxCount != null">#{maxCount},</if>
         </trim>
     </insert>
 
@@ -156,6 +158,9 @@
             </if>
             <if test="cover != null">
                 cover = #{cover},
+            </if>
+            <if test="maxCount != null">
+                max_count = #{maxCount},
             </if>
         </set>
         where id = #{id}

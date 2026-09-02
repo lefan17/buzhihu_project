@@ -45,4 +45,14 @@ public interface DashboardMapper {
             "left join blog b on b.category_id = c.id " +
             "group by c.id, c.name")
     List<Map<String, Object>> categoryBlogCount();
+
+    @Select("select a.id, a.name, count(s.id) as cnt from activity a " +
+            "left join activity_sign s on s.activity_id = a.id " +
+            "group by a.id, a.name order by cnt desc limit 5")
+    List<Map<String, Object>> topActivitySign();
+
+    @Select("select b.id, b.title, count(l.id) as cnt from blog b " +
+            "left join likes l on l.fid = b.id and l.module = '博客' " +
+            "group by b.id, b.title order by cnt desc limit 5")
+    List<Map<String, Object>> topBlogLikes();
 }

@@ -7,6 +7,7 @@ import com.example.entity.Account;
 import com.example.entity.Comment;
 import com.example.exception.CustomException;
 import com.example.mapper.CommentMapper;
+import com.example.utils.HtmlUtils;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -36,6 +37,7 @@ public class CommentService {
         if (RoleEnum.USER.name().equals(currentUser.getRole())) {
             comment.setUserId(currentUser.getId());
         }
+        comment.setContent(HtmlUtils.sanitize(comment.getContent()));  // 消毒，防 XSS
         comment.setTime(DateUtil.now());
         commentMapper.insert(comment);
         if (comment.getRootId() == null) {

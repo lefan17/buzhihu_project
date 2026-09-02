@@ -6,6 +6,8 @@ import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.entity.ActivitySign;
 import com.example.exception.CustomException;
+import com.example.entity.Activity;
+import com.example.mapper.ActivityMapper;
 import com.example.mapper.ActivitySignMapper;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
@@ -22,6 +24,9 @@ public class ActivitySignService {
     ActivitySignMapper activitySignMapper;
 
     @Resource
+    ActivityMapper activityMapper;
+
+    @Resource
     NotificationService notificationService;
 
     public void add(ActivitySign activitySign) {
@@ -29,6 +34,14 @@ public class ActivitySignService {
         ActivitySign as = this.selectByActivityIdAndUserId(activitySign.getActivityId(), currentUser.getId());  // 查看用户是否已经报名
         if (as != null) {
             throw new CustomException(ResultCodeEnum.ACTIVITY_SIGN_ERROR);
+        }
+        // 名额校验
+        Activity activity = activityMapper.selectById(activitySign.getActivityId());
+        if (activity != null && activity.getMaxCount() != null && activity.getMaxCount() > 0) {
+            int signed = activitySignMapper.countByActivityId(activitySign.getActivityId());
+            if (signed >= activity.getMaxCount()) {
+                throw new CustomException(ResultCodeEnum.ACTIVITY_FULL);
+            }
         }
         activitySign.setUserId(currentUser.getId());
         activitySign.setTime(DateUtil.now());
@@ -39,6 +52,10 @@ public class ActivitySignService {
 
     public ActivitySign selectByActivityIdAndUserId(Integer actId, Integer userId) {
         return activitySignMapper.selectByActivityIdAndUserId(actId, userId);
+    }
+
+    public int countByActivityId(Integer activityId) {
+        return activitySignMapper.countByActivityId(activityId);
     }
 
     public PageInfo<ActivitySign> selectPage(ActivitySign activitySign, Integer pageNum, Integer pageSize) {

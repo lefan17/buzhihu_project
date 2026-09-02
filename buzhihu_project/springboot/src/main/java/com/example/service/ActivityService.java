@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.example.common.enums.RoleEnum;
 import com.example.entity.*;
 import com.example.mapper.ActivityMapper;
+import com.example.utils.HtmlUtils;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -32,6 +33,7 @@ public class ActivityService {
      * 新增
      */
     public void add(Activity activity) {
+        activity.setContent(HtmlUtils.sanitize(activity.getContent()));  // 富文本消毒，防 XSS
         activityMapper.insert(activity);
     }
 
@@ -55,6 +57,7 @@ public class ActivityService {
      * 修改
      */
     public void updateById(Activity activity) {
+        activity.setContent(HtmlUtils.sanitize(activity.getContent()));  // 富文本消毒，防 XSS
         activityMapper.updateById(activity);
     }
 
@@ -101,6 +104,7 @@ public class ActivityService {
         act.setIsEnd(DateUtil.parseDate(act.getEnd()).isBefore(new Date()));  // 活动的结束时间在当前时间之前  就表示活动结束了
         ActivitySign activitySign = activitySignService.selectByActivityIdAndUserId(act.getId(), currentUser.getId());
         act.setIsSign(activitySign != null);
+        act.setSignCount(activitySignService.countByActivityId(act.getId()));  // 已报名人数
     }
 
 

@@ -34,6 +34,9 @@ public class ReportService {
     @Resource
     private UserService userService;
 
+    @Resource
+    private NotificationService notificationService;
+
     /**
      * 新增举报
      */
@@ -63,6 +66,8 @@ public class ReportService {
             return;
         }
         Account currentUser = TokenUtils.getCurrentUser();
+        // 先记录内容作者，删除内容后就查不到了
+        Integer ownerId = findOwnerId(report);
         report.setStatus(1);
         report.setHandleResult(action);
         report.setHandlerId(currentUser.getId());
@@ -77,12 +82,28 @@ public class ReportService {
             } else if ("评论".equals(report.getModule())) {
                 commentService.deleteById(report.getFid());
             }
+            // 回执：告知内容作者
+            if (ownerId != null) {
+                notificationService.create(ownerId, currentUser.getId(), "SYSTEM", report.getModule(), report.getFid(),
+                        "你发布的" + moduleName(report.getModule()) + "因违规已被管理员删除");
+            }
         } else if ("BAN".equals(action)) {
-            Integer ownerId = findOwnerId(report);
             if (ownerId != null) {
                 userService.ban(ownerId);
+                notificationService.create(ownerId, currentUser.getId(), "SYSTEM", report.getModule(), report.getFid(),
+                        "你的账号因发布违规内容已被封禁，如有异议请联系管理员");
             }
         }
+    }
+
+    private String moduleName(String module) {
+        if ("博客".equals(module)) {
+            return "博客";
+        }
+        if ("活动".equals(module)) {
+            return "活动";
+        }
+        return "评论";
     }
 
     /**

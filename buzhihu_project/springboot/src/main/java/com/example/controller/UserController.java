@@ -72,6 +72,14 @@ public class UserController {
     }
 
     /**
+     * 公开个人主页信息
+     */
+    @GetMapping("/publicInfo/{id}")
+    public Result publicInfo(@PathVariable Integer id) {
+        return Result.success(userService.publicInfo(id));
+    }
+
+    /**
      * 分页查询
      */
     @GetMapping("/selectPage")

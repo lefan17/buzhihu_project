@@ -31,6 +31,8 @@
         <el-table-column prop="address" label="活动地址" show-overflow-tooltip></el-table-column>
         <el-table-column prop="host" label="主办方"></el-table-column>
         <el-table-column prop="readCount" label="浏览量"></el-table-column>
+        <el-table-column prop="signCount" label="已报名" width="90" align="center"></el-table-column>
+        <el-table-column prop="maxCount" label="人数上限" width="90" align="center"></el-table-column>
         <el-table-column label="查看活动详情" width="140">
           <template v-slot="scope">
             <el-button @click="preview(scope.row.content)">查看活动详情</el-button>
@@ -93,6 +95,10 @@
         </el-form-item>
         <el-form-item label="主办方" prop="host">
           <el-input v-model="form.host" placeholder="主办方"></el-input>
+        </el-form-item>
+        <el-form-item label="报名上限" prop="maxCount">
+          <el-input-number :min="0" v-model="form.maxCount" style="width: 100%"></el-input-number>
+          <div style="color: #999; font-size: 12px">0 表示不限人数</div>
         </el-form-item>
         <el-form-item label="内容" prop="content">
           <div id="editor"></div>
