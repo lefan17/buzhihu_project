@@ -1,5 +1,11 @@
 # 不止乎 · buzhihu
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Java](https://img.shields.io/badge/Java-8-007396.svg)](buzhihu_project/springboot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.5.9-6DB33F.svg)](buzhihu_project/springboot)
+[![Vue](https://img.shields.io/badge/Vue-2.6-4FC08D.svg)](buzhihu_project/vue)
+[![MySQL](https://img.shields.io/badge/MySQL-5.7%2F8.0-4479A1.svg)](manager.sql)
+
 > 不止乎——一个面向校园的内容社区：写博客、看活动、交朋友。
 > 「知道的越多，越觉得不止于此。」
 
@@ -112,4 +118,4 @@ npm run serve
 
 ## 📄 License
 
-项目仅供学习交流使用。
+[MIT License](LICENSE) · Copyright (c) 2026 Lefan Ma
