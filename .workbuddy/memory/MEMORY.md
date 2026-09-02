@@ -31,3 +31,15 @@
 项目基于 SpringBoot2+Vue2 后台管理脚手架二次开发（痕迹：`xm-blog` 库名、`xm-user` localStorage 键、`admin@xm.com`、title「管理系统」）。三个致命缺陷的根子是**脚手架基因 vs 内容社区需求冲突**（访问模型 / 权限粒度 / 内容生产 / 输入可信度 四个维度全对立），不是编码失误。
 
 改造顺序：定位二选一 → 去脚手架化 → 差异化功能 → 工程门面。
+
+## 本地开发环境（2026-09-02 已就绪）
+
+- **JDK 8u504**（Temurin）：`C:\Users\lefan\java\jdk8u504-b01`；**Maven 3.9.16**：`C:\Users\lefan\java\apache-maven-3.9.16`（配 `~/.m2/settings.xml` 阿里云镜像）
+- 用户级环境变量 JAVA_HOME/MAVEN_HOME/PATH 已设置，新开 CMD 生效
+- **编译/启动不在 PATH 环境里也能用 Git Bash 跑**：编译 `javac -parameters -encoding UTF-8 -d target/classes -cp "$(cat C:/Users/lefan/java/cp.txt)" @C:/Users/lefan/java/sources.txt`；启动用 `--server.port=19091`（我的沙箱 9xxx 段端口被禁，19091 以上正常；用户终端不受限）
+- classpath 生成：`mvn.sh dependency:build-classpath -Dmdep.outputFile=cp.txt`
+- 数据库：本地 MySQL root/123456，库 `xm-blog` 已导入（13 表）
+
+## 脚手架后门（已铲除，2026-09-02）
+
+`BusinessException.java` 实为防盗版后门：启动时采集机器码上报 `api.javaxmsz.cn/orders/sourceCodeCheck`，失败 `System.exit(0)` 静默退出。已删除（提交 2bfb10e）。此类脚手架源码可能还有其他后门，新增代码/启动异常时留意 `System.exit`、`@PostConstruct`、联网校验（HttpUtil/Runtime.exec/wmic）。
