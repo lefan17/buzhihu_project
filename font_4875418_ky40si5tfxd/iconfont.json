@@ -1,0 +1,23 @@
+{
+  "id": "4875418",
+  "name": "11",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1132478",
+      "name": "推荐",
+      "font_class": "tuijian",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "1142516",
+      "name": "眼睛",
+      "font_class": "yanjing",
+      "unicode": "e6b0",
+      "unicode_decimal": 59056
+    }
+  ]
+}

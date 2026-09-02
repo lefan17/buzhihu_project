@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ReportMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Report">
+        select r.*, u.name as reporterName, u.avatar as reporterAvatar
+        from report r
+        left join user u
+        on r.user_id = u.id
+        <where>
+            <if test="status != null">and r.status = #{status}</if>
+            <if test="module != null">and r.module = #{module}</if>
+        </where>
+        order by r.id desc
+    </select>
+
+    <select id="selectById" resultType="com.example.entity.Report">
+        select * from report where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.example.entity.Report" useGeneratedKeys="true" keyProperty="id">
+        insert into report (fid, module, reason, user_id, time, status)
+        values (#{fid}, #{module}, #{reason}, #{userId}, #{time}, #{status})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Report">
+        update report
+        <set>
+            <if test="status != null">status = #{status},</if>
+            <if test="handleResult != null">handle_result = #{handleResult},</if>
+            <if test="handlerId != null">handler_id = #{handlerId},</if>
+            <if test="handleTime != null">handle_time = #{handleTime},</if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

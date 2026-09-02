@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "element-icons"; /* Project id 4875418 */
+  src: url('iconfont.woff2?t=1743246325597') format('woff2'),
+       url('iconfont.woff?t=1743246325597') format('woff'),
+       url('iconfont.ttf?t=1743246325597') format('truetype');
+}
+
+.element-icons {
+  font-family: "element-icons" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.el-icon-like:before {
+  content: "\6c";
+}
+
+.el-icon-eye:before {
+  content: "\e6b0";
+}
+
