@@ -63,6 +63,8 @@ buzhihu_project/
 └── 项目体检报告.md            # 架构体检与修复记录
 ```
 
+> 说明：脚手架源码包与博客图片素材包体量较大，已从仓库移出并归档到 [Releases · assets-v1](https://github.com/lefan17/buzhihu_project/releases/tag/assets-v1)，需要时从那里下载。
+
 **数据模型（13 表）**：`user` `admin` `category` `blog` `activity` `activity_sign` `comment` `likes` `collect` `follow` `notice` `notification` `report`
 
 ## 🚀 快速开始
